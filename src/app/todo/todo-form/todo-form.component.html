@@ -1,0 +1,25 @@
+<h2>Todo Template driven Form</h2>
+
+
+<form action="" #todoForm="ngForm" (ngSubmit)="addTodo()">
+  <input type="text" name="title" #title = "ngModel" id="" placeholder="title" [(ngModel)]="todo.title" required >
+  {{title.valid}}
+  {{title.pristine}}
+  {{title.touched}}
+  <input type="date" name="dueDate" id="" placeholder="dueDate" [(ngModel)]="todo.dueDate">
+  <input type="checkbox" name="completed" id="" [(ngModel)]="todo.completed">done?
+
+  <button type="submit" [disabled]="!todoForm.form.valid">
+    Save
+  </button>
+
+</form>
+
+<pre>
+  valid : {{todoForm.valid | json}}
+  pristine : {{todoForm.pristine | json}}
+  touched : {{todoForm.touched | json}}
+</pre>
+<pre>
+  {{todo | json}}
+</pre>
