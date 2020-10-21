@@ -22,15 +22,12 @@ export class TodoListComponent implements OnInit, AfterViewInit {
     const deleteTodos$ = this.bus.bus$.pipe(
       filter(message => message.type === 'DELETE_TODO'),
       switchMap(message => this.todoService.delete(message.payload as Todo))
-      );
+    );
     const initTodos$ = this.bus.bus$.pipe(filter(message => message.type === 'INIT_TODO'));
 
-
-    merge(newTodos$, deleteTodos$, initTodos$).subscribe(message => {
-      console.log(`merge TodoListComponent: ${message}`);
-      this.todos$ = this.todoService.findAll();
-    });
-
+    this.todos$ = merge(newTodos$, deleteTodos$, initTodos$).pipe(
+      switchMap(_ => this.todoService.findAll())
+    );
 
   }
 
